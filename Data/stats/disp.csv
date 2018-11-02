@@ -1,0 +1,61 @@
+  1. "disp_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         5369
+	Smallest value:        1
+	Largest value:         13 690
+	Sum:                   17 916 879
+	Mean:                  3 337,098
+	Median:                2 839
+	StDev:                 2 770,419
+	Most common values:    1 (1x)
+	                       2 (1x)
+	                       3 (1x)
+	                       4 (1x)
+	                       5 (1x)
+
+  2. "client_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         5369
+	Smallest value:        1
+	Largest value:         13 998
+	Sum:                   18 034 535
+	Mean:                  3 359,012
+	Median:                2 839
+	StDev:                 2 832,912
+	Most common values:    1 (1x)
+	                       2 (1x)
+	                       3 (1x)
+	                       4 (1x)
+	                       5 (1x)
+
+  3. "account_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         4500
+	Smallest value:        1
+	Largest value:         11 382
+	Sum:                   14 858 691
+	Mean:                  2 767,497
+	Median:                2 349
+	StDev:                 2 307,844
+	Most common values:    2 (2x)
+	                       3 (2x)
+	                       8 (2x)
+	                       12 (2x)
+	                       13 (2x)
+
+  4. "type"
+
+	Type of data:          Text
+	Contains null values:  False
+	Unique values:         2
+	Longest value:         9 characters
+	Most common values:    OWNER (4500x)
+	                       DISPONENT (869x)
+
+Row count: 5369

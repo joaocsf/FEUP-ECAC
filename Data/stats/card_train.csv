@@ -1,0 +1,62 @@
+  1. "card_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         177
+	Smallest value:        3
+	Largest value:         1 247
+	Sum:                   76 743
+	Mean:                  433,576
+	Median:                397
+	StDev:                 290,508
+	Most common values:    1 005 (1x)
+	                       104 (1x)
+	                       747 (1x)
+	                       70 (1x)
+	                       577 (1x)
+
+  2. "disp_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         177
+	Smallest value:        41
+	Largest value:         13 660
+	Sum:                   536 615
+	Mean:                  3 031,723
+	Median:                2 513
+	StDev:                 2 632,339
+	Most common values:    9 285 (1x)
+	                       588 (1x)
+	                       4 915 (1x)
+	                       439 (1x)
+	                       3 687 (1x)
+
+  3. "type"
+
+	Type of data:          Text
+	Contains null values:  False
+	Unique values:         3
+	Longest value:         7 characters
+	Most common values:    classic (127x)
+	                       junior (41x)
+	                       gold (9x)
+
+  4. "issued"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         162
+	Smallest value:        931 107
+	Largest value:         961 231
+	Sum:                   169 029 913
+	Mean:                  954 971,26
+	Median:                960 221
+	StDev:                 7 217,975
+	Most common values:    950 305 (2x)
+	                       950 418 (2x)
+	                       950 624 (2x)
+	                       960 330 (2x)
+	                       960 331 (2x)
+
+Row count: 177

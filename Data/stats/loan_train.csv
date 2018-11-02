@@ -1,0 +1,117 @@
+  1. "loan_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         328
+	Smallest value:        4 959
+	Largest value:         7 308
+	Sum:                   2 035 456
+	Mean:                  6 205,659
+	Median:                6 227,5
+	StDev:                 667,986
+	Most common values:    5 314 (1x)
+	                       5 316 (1x)
+	                       6 863 (1x)
+	                       5 325 (1x)
+	                       7 240 (1x)
+
+  2. "account_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         328
+	Smallest value:        2
+	Largest value:         11 362
+	Sum:                   1 962 124
+	Mean:                  5 982,085
+	Median:                6 032
+	StDev:                 3 213,262
+	Most common values:    1 787 (1x)
+	                       1 801 (1x)
+	                       9 188 (1x)
+	                       1 843 (1x)
+	                       11 013 (1x)
+
+  3. "date"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         283
+	Smallest value:        930 705
+	Largest value:         961 227
+	Sum:                   311 596 433
+	Mean:                  949 989,125
+	Median:                950 565,5
+	StDev:                 9 495,505
+	Most common values:    940 526 (3x)
+	                       941 221 (3x)
+	                       951 212 (3x)
+	                       960 429 (3x)
+	                       961 029 (3x)
+
+  4. "amount"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         316
+	Smallest value:        4 980
+	Largest value:         538 500
+	Sum:                   47 661 228
+	Mean:                  145 308,622
+	Median:                114 804
+	StDev:                 105 247,318
+	Most common values:    165 960 (2x)
+	                       174 744 (2x)
+	                       80 952 (2x)
+	                       87 216 (2x)
+	                       189 696 (2x)
+
+  5. "duration"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         5
+	Smallest value:        12
+	Largest value:         60
+	Sum:                   11 760
+	Mean:                  35,854
+	Median:                36
+	StDev:                 16,735
+	Most common values:    24 (75x)
+	                       36 (67x)
+	                       60 (65x)
+	                       48 (61x)
+	                       12 (60x)
+
+  6. "payments"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         300
+	Smallest value:        319
+	Largest value:         9 689
+	Sum:                   1 361 506
+	Mean:                  4 150,933
+	Median:                3 878,5
+	StDev:                 2 193,621
+	Most common values:    3 874 (3x)
+	                       4 610 (2x)
+	                       7 281 (2x)
+	                       3 217 (2x)
+	                       3 151 (2x)
+
+  7. "status"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         2
+	Smallest value:        -1
+	Largest value:         1
+	Sum:                   236
+	Mean:                  0,72
+	Median:                1
+	StDev:                 0,696
+	Most common values:    1 (282x)
+	                       -1 (46x)
+
+Row count: 328

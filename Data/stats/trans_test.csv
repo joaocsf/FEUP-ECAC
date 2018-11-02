@@ -1,0 +1,149 @@
+  1. "trans_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         30200
+	Smallest value:        6 145
+	Largest value:         3 682 682
+	Sum:                   60 332 596 873
+	Mean:                  1 997 768,108
+	Median:                2 042 315,5
+	StDev:                 1 172 840,564
+	Most common values:    6 145 (1x)
+	                       6 456 (1x)
+	                       6 150 (1x)
+	                       6 171 (1x)
+	                       6 457 (1x)
+
+  2. "account_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         354
+	Smallest value:        25
+	Largest value:         11 328
+	Sum:                   170 321 910
+	Mean:                  5 639,798
+	Median:                5 477
+	StDev:                 3 362,671
+	Most common values:    9 159 (218x)
+	                       2 982 (215x)
+	                       7 181 (215x)
+	                       7 594 (191x)
+	                       4 415 (190x)
+
+  3. "date"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         1215
+	Smallest value:        950 419
+	Largest value:         981 205
+	Sum:                   29 283 934 035
+	Mean:                  969 666,69
+	Median:                970 522
+	StDev:                 6 984,082
+	Most common values:    970 430 (420x)
+	                       970 228 (415x)
+	                       970 331 (415x)
+	                       970 531 (415x)
+	                       970 131 (412x)
+
+  4. "type"
+
+	Type of data:          Text
+	Contains null values:  False
+	Unique values:         3
+	Longest value:         18 characters
+	Most common values:    withdrawal (17462x)
+	                       credit (11882x)
+	                       withdrawal in cash (856x)
+
+  5. "operation"
+
+	Type of data:          Text
+	Contains null values:  True (excluded from calculations)
+	Unique values:         6
+	Longest value:         28 characters
+	Most common values:    withdrawal in cash (13889x)
+	                       credit in cash (5304x)
+	                       None (5130x)
+	                       remittance to another bank (4375x)
+	                       collection from another bank (1448x)
+
+  6. "amount"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         6957
+	Smallest value:        0,2
+	Largest value:         78 900
+	Sum:                   271 161 617,8
+	Mean:                  8 978,862
+	Median:                3 700
+	StDev:                 12 456,203
+	Most common values:    14,6 (2680x)
+	                       30 (371x)
+	                       2 400 (180x)
+	                       100 (178x)
+	                       1 800 (174x)
+
+  7. "balance"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         29170
+	Smallest value:        -17 030,4
+	Largest value:         173 151
+	Sum:                   1 348 255 166
+	Mean:                  44 644,211
+	Median:                40 378,2
+	StDev:                 24 068,543
+	Most common values:    700 (42x)
+	                       300 (39x)
+	                       900 (38x)
+	                       1 000 (38x)
+	                       600 (35x)
+
+  8. "k_symbol"
+
+	Type of data:          Text
+	Contains null values:  True (excluded from calculations)
+	Unique values:         6
+	Longest value:         37 characters
+	Most common values:    None (18968x)
+	                       interest credited (5130x)
+	                       payment for statement (3186x)
+	                       household (2192x)
+	                       insurrance payment (681x)
+
+  9. "bank"
+
+	Type of data:          Text
+	Contains null values:  True (excluded from calculations)
+	Unique values:         14
+	Longest value:         2 characters
+	Most common values:    None (24377x)
+	                       YZ (501x)
+	                       UV (500x)
+	                       WX (497x)
+	                       KL (482x)
+
+ 10. "account"
+
+	Type of data:          Number
+	Contains null values:  True (excluded from calculations)
+	Unique values:         541
+	Smallest value:        559 258
+	Largest value:         99 994 199
+	Sum:                   306 372 808 137
+	Mean:                  52 614 255,218
+	Median:                53 494 477
+	StDev:                 29 172 145,164
+	Most common values:    None (24377x)
+	                       79 838 293 (30x)
+	                       52 864 879 (28x)
+	                       4 896 235 (28x)
+	                       11 400 890 (24x)
+
+Row count: 30200

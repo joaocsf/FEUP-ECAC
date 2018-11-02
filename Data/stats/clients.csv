@@ -1,0 +1,61 @@
+  1. "client_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         5369
+	Smallest value:        1
+	Largest value:         13 998
+	Sum:                   18 034 535
+	Mean:                  3 359,012
+	Median:                2 839
+	StDev:                 2 832,912
+	Most common values:    1 (1x)
+	                       2 (1x)
+	                       3 (1x)
+	                       4 (1x)
+	                       5 (1x)
+
+  2. "district_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         77
+	Smallest value:        1
+	Largest value:         77
+	Sum:                   200 318
+	Mean:                  37,31
+	Median:                38
+	StDev:                 25,044
+	Most common values:    1 (663x)
+	                       74 (180x)
+	                       70 (169x)
+	                       54 (155x)
+	                       64 (109x)
+
+  3. "birthday"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         4738
+	Smallest value:        110 820
+	Largest value:         870 927
+	Sum:                   2 859 807 274
+	Mean:                  532 651,755
+	Median:                540 506
+	StDev:                 172 819,918
+	Most common values:    520 826 (4x)
+	                       710 228 (4x)
+	                       701 007 (4x)
+	                       650 725 (4x)
+	                       470 713 (4x)
+
+  4. "gender"
+
+	Type of data:          Text
+	Contains null values:  False
+	Unique values:         2
+	Longest value:         1 characters
+	Most common values:    m (2724x)
+	                       f (2645x)
+
+Row count: 5369

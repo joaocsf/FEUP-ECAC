@@ -1,0 +1,62 @@
+  1. "account_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         4500
+	Smallest value:        1
+	Largest value:         11 382
+	Sum:                   12 537 304
+	Mean:                  2 786,068
+	Median:                2 368
+	StDev:                 2 313,812
+	Most common values:    576 (1x)
+	                       3 818 (1x)
+	                       704 (1x)
+	                       2 378 (1x)
+	                       2 632 (1x)
+
+  2. "district_id"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         77
+	Smallest value:        1
+	Largest value:         77
+	Sum:                   167 897
+	Mean:                  37,31
+	Median:                38
+	StDev:                 25,177
+	Most common values:    1 (554x)
+	                       70 (152x)
+	                       74 (135x)
+	                       54 (128x)
+	                       64 (92x)
+
+  3. "frequency"
+
+	Type of data:          Text
+	Contains null values:  False
+	Unique values:         3
+	Longest value:         26 characters
+	Most common values:    monthly issuance (4167x)
+	                       weekly issuance (240x)
+	                       issuance after transaction (93x)
+
+  4. "date"
+
+	Type of data:          Number
+	Contains null values:  False
+	Unique values:         1535
+	Smallest value:        930 101
+	Largest value:         971 229
+	Sum:                   4 282 445 739
+	Mean:                  951 654,609
+	Median:                960 102
+	StDev:                 14 842,188
+	Most common values:    930 208 (13x)
+	                       931 008 (12x)
+	                       960 625 (11x)
+	                       961 124 (11x)
+	                       930 227 (10x)
+
+Row count: 4500
