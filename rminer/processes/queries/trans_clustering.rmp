@@ -141,24 +141,23 @@
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
       </operator>
+      <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve trans_train" width="90" x="45" y="391">
+        <parameter key="repository_entry" value="../../data/raw/trans_train"/>
+      </operator>
       <connect from_op="Retrieve query_trans" from_port="output" to_op="Multiply" to_port="input"/>
       <connect from_op="Multiply" from_port="output 1" to_op="Clustering 5" to_port="example set"/>
       <connect from_op="Multiply" from_port="output 2" to_op="Clustering 2" to_port="example set"/>
       <connect from_op="Multiply" from_port="output 3" to_op="Clustering 10" to_port="example set"/>
       <connect from_op="Multiply" from_port="output 4" to_op="Clustering 15" to_port="example set"/>
       <connect from_op="Multiply" from_port="output 5" to_op="Clustering 20" to_port="example set"/>
-      <connect from_op="Clustering 20" from_port="cluster model" to_port="result 5"/>
-      <connect from_op="Clustering 15" from_port="cluster model" to_port="result 4"/>
-      <connect from_op="Clustering 10" from_port="cluster model" to_port="result 3"/>
+      <connect from_op="Clustering 10" from_port="cluster model" to_port="result 2"/>
       <connect from_op="Clustering 5" from_port="cluster model" to_port="result 1"/>
-      <connect from_op="Clustering 2" from_port="cluster model" to_port="result 2"/>
+      <connect from_op="Clustering 2" from_port="cluster model" to_port="result 3"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
       <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
-      <portSpacing port="sink_result 6" spacing="0"/>
     </process>
   </operator>
 </process>
