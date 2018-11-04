@@ -4,6 +4,7 @@ trans <- read.csv('./csv_db/trans_train.csv',sep = ',', header=TRUE)
 account <- read.csv('./csv_db/account.csv',sep = ';', header=TRUE)
 district <- read.csv('./csv_db/district.csv',sep = ';', header=TRUE)
 disp <- read.csv('./csv_db/disp.csv',sep = ';', header=TRUE)
+loan <- read.csv('./csv_db/loan_train.csv',sep = ';', header=TRUE)
 
 clients <- read.csv('./csv_db/clients.csv',sep = ';', header=TRUE)
 clients$age_range <- clients$birthday
@@ -73,6 +74,22 @@ clients_accounts <- subset(left_join(disp_owners, clients, by='client_id'), sele
 account_district <- subset(left_join(account, district, by=c('district_id'='code')), select=c(account_id, district_id, name, region))
 account_district_client <- left_join(clients_accounts, account_district, 'account_id')
 trans_client_district <- left_join(trans_calculations, account_district_client, 'account_id')
+
+
+
+colnames(loan_order_by_account_not_approved)[2] <- "amount_recused"
+
+aproved_not_aproved <- left_join(loan_order_by_account_not_approved, loan_order_by_account_approved, 'account_id')
+
+
+trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
+
+loan_sum <- loan %>%
+    group_by(status) %>%
+    summarize(
+      status=length(status)
+    )
+
 
 group_by_region <- trans_client_district %>% 
   group_by(region) %>% 
