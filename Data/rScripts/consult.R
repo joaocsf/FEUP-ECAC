@@ -81,11 +81,6 @@ trans_client_district <- left_join(trans_calculations, account_district_client, 
 
 trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
 
-loan_sum <- loan %>%
-    group_by(status) %>%
-    summarize(
-      status=length(status)
-    )
 
 
 group_by_region <- trans_client_district %>% 

@@ -1,6 +1,18 @@
 db=sqlite:///test.db
 rm -rf queries/
 mkdir queries
+
+sql2csv --db $db --query \
+    "UPDATE
+    district
+    SET
+    unemployment95 = '0'
+    WHERE
+    unemployment95 like '%?%'
+    " > queries/updatedDistrict.csv
+
+
+
 # Calculate the Credit Values
 sql2csv --db $db --query \
     " select
