@@ -32,8 +32,21 @@ all_values <- function(amount, type,METHOD){
   METHOD(res)
 }
 
+calculate_ratio <- function(coll1, coll2){
+  if(coll2[1] == 0){
+    if(coll1[1] != 0){
+      2
+    }else{
+      0
+    }
+  }else{
+    coll1[1]/coll2[1]
+  }
+}
+
 filtered_values <- function(amount, type, credit, METHOD){
   res <- c()
+  
   for (i in 1:length(amount)){
     is_credit <- type[i] == 'credit'
     value <- amount[i]
@@ -53,10 +66,15 @@ filtered_values <- function(amount, type, credit, METHOD){
 }
 
 
+count_cmp <- function(coll, value){
+  length(which(coll==value))
+}
 
 trans_calculations <- trans %>% 
-group_by(account_id) %>% 
+  group_by(account_id) %>% 
   summarize(
+    n_credit = count_cmp(type, "credit"),
+    n_withdrawal = count_cmp(type, "withdrawal") + count_cmp(type, "withdrawal cash"),
     max_credit=filtered_values(amount,type, TRUE, max),
     avg_credit=filtered_values(amount,type, TRUE, mean),
     min_credit=filtered_values(amount,type, TRUE, min),
@@ -67,7 +85,7 @@ group_by(account_id) %>%
     avg_balance=mean(balance),
     max_balance=max(balance),
     min_balance=min(balance)
-    )
+  )
 
 disp_owners <- filter(disp,type=="OWNER")
 clients_accounts <- subset(left_join(disp_owners, clients, by='client_id'), select=-district_id)
@@ -77,11 +95,19 @@ account_district_client <- left_join(clients_accounts, account_district, 'accoun
 trans_client_district <- left_join(trans_calculations, account_district_client, 'account_id')
 
 
-
-
 trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
+print(trans_client_district_loan)
 
+trans_ratio_calculations <- trans_client_district_loan %>% 
+  group_by(loan_id) %>% 
+  summarize(
+    credit_per_witdrawal = calculate_ratio(avg_credit, avg_withdrawal),
+    crimes96_per_crime95 = calculate_ratio(crimes96, crimes95),
+    loanAmount_per_avgAmount = calculate_ratio(amount, avg_amount)
+  )
 
+trans_client_final <- left_join(trans_client_district_loan, trans_ratio_calculations, 'loan_id')
+print(trans_client_final)
 
 group_by_region <- trans_client_district %>% 
   group_by(region) %>% 
@@ -119,6 +145,8 @@ group_by_age_range <- trans_client_district %>%
     avg_balance=mean(avg_balance)
   )
 
+
+
 #Approved Loans
 #ggplot(trans_client_district_loan[trans_client_district_loan$status>0,], mapping=aes(x=age_range)) + geom_histogram(binwidth = 300, stat="count")
 # + theme_bw() + coord_cartesian() + scale_color_gradient()
@@ -128,7 +156,7 @@ group_by_age_range <- trans_client_district %>%
 #ggplot(data = group_by_age_range) + geom_bar(mapping=aes(x=age_range, y=avg_amount), stat="identity") + xlab('Decades') + ylab('Averaged Credited Amount (M.U)') + ggtitle('Averaged Credited Amount Grouped By Decades') + theme_bw() + coord_cartesian() + scale_color_gradient()
 #ggplot(data = group_by_age_range) + geom_bar(mapping=aes(x=age_range, y=avg_balance), stat="identity") + xlab('Decades') + ylab('Average Balance (M.U)') + ggtitle('Average Balance Grouped By Decades') + theme_bw() + coord_cartesian() + scale_color_gradient()
 #ggplot(data = trans_client_district) + geom_point(mapping=aes(x=avg_credit, y=avg_withdrawal), stat="identity") + theme_bw() + coord_cartesian() + scale_color_gradient() + geom_abline(intercept=0, slope=1, linetype="dashed", color="red", size=1.25) + xlab("Average Credit") + ylab("Average Withdrawal") + ggtitle("Comparison of the Averages Between Credit and Withdrawal (per account).") 
-print(trans_calculations)
+#print(trans_calculations)
 #[1] "loan_id"               "account_id"            "date.x"                "amount"               
 #[5] "duration"              "payments"              "status"                "max_credit"           
 #[9] "avg_credit"            "min_credit"            "max_withdrawal"        "avg_withdrawal"       
