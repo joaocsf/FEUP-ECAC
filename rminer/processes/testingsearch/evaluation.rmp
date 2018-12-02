@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><process version="9.0.002">
+<?xml version="1.0" encoding="UTF-8"?><process version="9.0.003">
   <context>
     <input/>
     <output/>
     <macros/>
   </context>
-  <operator activated="true" class="process" compatibility="9.0.002" expanded="true" name="Process">
+  <operator activated="true" class="process" compatibility="9.0.003" expanded="true" name="Process">
     <parameter key="logverbosity" value="init"/>
     <parameter key="random_seed" value="2001"/>
     <parameter key="send_mail" value="never"/>
@@ -12,34 +12,34 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="concurrency:cross_validation" compatibility="9.0.002" expanded="true" height="145" name="Cross Validation" width="90" x="179" y="34">
+      <operator activated="true" class="concurrency:cross_validation" compatibility="9.0.003" expanded="true" height="145" name="Cross Validation" width="90" x="179" y="34">
         <parameter key="split_on_batch_attribute" value="false"/>
         <parameter key="leave_one_out" value="false"/>
-        <parameter key="number_of_folds" value="10"/>
+        <parameter key="number_of_folds" value="20"/>
         <parameter key="sampling_type" value="stratified sampling"/>
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.0.002" expanded="true" height="103" name="Decision Tree" width="90" x="112" y="34">
+          <operator activated="false" class="concurrency:parallel_decision_tree" compatibility="9.0.003" expanded="true" height="103" name="Decision Tree" width="90" x="112" y="34">
             <parameter key="criterion" value="information_gain"/>
-            <parameter key="maximal_depth" value="5"/>
+            <parameter key="maximal_depth" value="20"/>
             <parameter key="apply_pruning" value="true"/>
-            <parameter key="confidence" value="0.1"/>
+            <parameter key="confidence" value="1.0E-5"/>
             <parameter key="apply_prepruning" value="true"/>
-            <parameter key="minimal_gain" value="0.01"/>
+            <parameter key="minimal_gain" value="1.0E-4"/>
             <parameter key="minimal_leaf_size" value="2"/>
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
           </operator>
-          <operator activated="false" class="concurrency:parallel_random_forest" compatibility="9.0.002" expanded="true" height="103" name="Random Forest" width="90" x="112" y="136">
-            <parameter key="number_of_trees" value="20"/>
-            <parameter key="criterion" value="accuracy"/>
-            <parameter key="maximal_depth" value="5"/>
-            <parameter key="apply_pruning" value="true"/>
-            <parameter key="confidence" value="0.1"/>
-            <parameter key="apply_prepruning" value="true"/>
-            <parameter key="minimal_gain" value="0.01"/>
+          <operator activated="false" class="concurrency:parallel_random_forest" compatibility="9.0.003" expanded="true" height="103" name="Random Forest" width="90" x="112" y="136">
+            <parameter key="number_of_trees" value="100"/>
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="maximal_depth" value="10"/>
+            <parameter key="apply_pruning" value="false"/>
+            <parameter key="confidence" value="0.5"/>
+            <parameter key="apply_prepruning" value="false"/>
+            <parameter key="minimal_gain" value="0.05"/>
             <parameter key="minimal_leaf_size" value="2"/>
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
@@ -51,8 +51,8 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
           </operator>
-          <operator activated="false" class="support_vector_machine" compatibility="9.0.002" expanded="true" height="124" name="SVM" width="90" x="112" y="238">
-            <parameter key="kernel_type" value="dot"/>
+          <operator activated="false" class="support_vector_machine" compatibility="9.0.003" expanded="true" height="124" name="SVM" width="90" x="112" y="238">
+            <parameter key="kernel_type" value="multiquadric"/>
             <parameter key="kernel_gamma" value="1.0"/>
             <parameter key="kernel_sigma1" value="1.0"/>
             <parameter key="kernel_sigma2" value="0.0"/>
@@ -73,23 +73,76 @@
             <parameter key="epsilon" value="0.0"/>
             <parameter key="epsilon_plus" value="0.0"/>
             <parameter key="epsilon_minus" value="0.0"/>
-            <parameter key="balance_cost" value="false"/>
+            <parameter key="balance_cost" value="true"/>
             <parameter key="quadratic_loss_pos" value="false"/>
             <parameter key="quadratic_loss_neg" value="false"/>
             <parameter key="estimate_performance" value="false"/>
           </operator>
-          <connect from_port="training set" to_op="Decision Tree" to_port="training set"/>
-          <connect from_op="Decision Tree" from_port="model" to_port="model"/>
+          <operator activated="false" class="neural_net" compatibility="9.0.003" expanded="true" height="82" name="Neural Net" width="90" x="112" y="391">
+            <list key="hidden_layers">
+              <parameter key="feature_extraction" value="10"/>
+            </list>
+            <parameter key="training_cycles" value="200"/>
+            <parameter key="learning_rate" value="0.01"/>
+            <parameter key="momentum" value="0.9"/>
+            <parameter key="decay" value="true"/>
+            <parameter key="shuffle" value="true"/>
+            <parameter key="normalize" value="true"/>
+            <parameter key="error_epsilon" value="1.0E-4"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+          </operator>
+          <operator activated="true" class="h2o:deep_learning" compatibility="9.0.000" expanded="true" height="82" name="Deep Learning" width="90" x="112" y="493">
+            <parameter key="activation" value="Rectifier"/>
+            <enumeration key="hidden_layer_sizes">
+              <parameter key="hidden_layer_sizes" value="50"/>
+              <parameter key="hidden_layer_sizes" value="50"/>
+              <parameter key="hidden_layer_sizes" value="30"/>
+            </enumeration>
+            <enumeration key="hidden_dropout_ratios"/>
+            <parameter key="reproducible_(uses_1_thread)" value="false"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="epochs" value="10.0"/>
+            <parameter key="compute_variable_importances" value="false"/>
+            <parameter key="train_samples_per_iteration" value="-2"/>
+            <parameter key="adaptive_rate" value="true"/>
+            <parameter key="epsilon" value="1.0E-8"/>
+            <parameter key="rho" value="0.99"/>
+            <parameter key="learning_rate" value="0.005"/>
+            <parameter key="learning_rate_annealing" value="1.0E-6"/>
+            <parameter key="learning_rate_decay" value="1.0"/>
+            <parameter key="momentum_start" value="0.0"/>
+            <parameter key="momentum_ramp" value="1000000.0"/>
+            <parameter key="momentum_stable" value="0.0"/>
+            <parameter key="nesterov_accelerated_gradient" value="true"/>
+            <parameter key="standardize" value="true"/>
+            <parameter key="L1" value="1.0E-5"/>
+            <parameter key="L2" value="0.0"/>
+            <parameter key="max_w2" value="10.0"/>
+            <parameter key="loss_function" value="Quadratic"/>
+            <parameter key="distribution_function" value="AUTO"/>
+            <parameter key="early_stopping" value="false"/>
+            <parameter key="stopping_rounds" value="1"/>
+            <parameter key="stopping_metric" value="AUTO"/>
+            <parameter key="stopping_tolerance" value="0.001"/>
+            <parameter key="missing_values_handling" value="MeanImputation"/>
+            <parameter key="max_runtime_seconds" value="0"/>
+            <list key="expert_parameters"/>
+            <list key="expert_parameters_"/>
+          </operator>
+          <connect from_port="training set" to_op="Deep Learning" to_port="training set"/>
+          <connect from_op="Deep Learning" from_port="model" to_port="model"/>
           <portSpacing port="source_training set" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_through 1" spacing="0"/>
         </process>
         <process expanded="true">
-          <operator activated="true" class="apply_model" compatibility="9.0.002" expanded="true" height="82" name="Apply Model" width="90" x="45" y="34">
+          <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model" width="90" x="45" y="34">
             <list key="application_parameters"/>
             <parameter key="create_view" value="false"/>
           </operator>
-          <operator activated="true" class="performance_binominal_classification" compatibility="9.0.002" expanded="true" height="82" name="Performance" width="90" x="179" y="34">
+          <operator activated="true" class="performance_binominal_classification" compatibility="9.0.003" expanded="true" height="82" name="Performance" width="90" x="179" y="34">
             <parameter key="main_criterion" value="AUC"/>
             <parameter key="accuracy" value="false"/>
             <parameter key="classification_error" value="false"/>
