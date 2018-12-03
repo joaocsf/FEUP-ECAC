@@ -5,6 +5,7 @@ account <- read.csv('./csv_db/account.csv',sep = ';', header=TRUE)
 district <- read.csv('./csv_db/district.csv',sep = ';', header=TRUE)
 disp <- read.csv('./csv_db/disp.csv',sep = ';', header=TRUE)
 loan <- read.csv('./csv_db/loan_test.csv',sep = ';', header=TRUE)
+card <- read.csv('./csv_db/card_test.csv', sep =';', header=TRUE)
 
 clients <- read.csv('./csv_db/clients.csv',sep = ';', header=TRUE)
 clients$age_range <- clients$birthday
@@ -96,6 +97,7 @@ trans_client_district <- left_join(trans_calculations, account_district_client, 
 
 
 trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
+
 print(trans_client_district_loan)
 
 trans_ratio_calculations <- trans_client_district_loan %>% 
@@ -107,7 +109,9 @@ trans_ratio_calculations <- trans_client_district_loan %>%
   )
 
 trans_client_final <- left_join(trans_client_district_loan, trans_ratio_calculations, 'loan_id')
-print(trans_client_final)
+
+trans_client_final_card <- left_join(trans_client_final, card, 'disp_id')
+print(trans_client_final_card)
 
 group_by_region <- trans_client_district %>% 
   group_by(region) %>% 
