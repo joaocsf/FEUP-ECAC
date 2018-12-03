@@ -88,6 +88,13 @@ group_by(account_id) %>%
     min_balance=min(balance)
     )
 
+
+trans_by_month <- trans %>% mutate(date_by_month=floor(date/100))
+trans_by_month_sum <- trans_by_month %>% group_by(date_by_month, account_id) %>% summarize(sum_balance = mean(balance))
+
+trans_by_month_final <- trans_by_month_sum %>% group_by(account_id) %>% summarize(avg_monthly_balance=mean(sum_balance))
+
+
 disp_owners <- filter(disp,type=="OWNER")
 clients_accounts <- subset(left_join(disp_owners, clients, by='client_id'), select=-district_id)
 #account_district <- subset(left_join(account, district, by=c('district_id'='code')), select=c(account_id, district_id, name, region))
@@ -112,6 +119,8 @@ trans_client_final <- left_join(trans_client_district_loan, trans_ratio_calculat
 
 trans_client_final_card <- left_join(trans_client_final, card, 'disp_id')
 print(trans_client_final_card)
+
+
 
 group_by_region <- trans_client_district %>% 
   group_by(region) %>% 
