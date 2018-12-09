@@ -19,6 +19,9 @@ clients$age_range <- ifelse((clients$birthday>=700000 & clients$birthday<=800000
 clients$age_range <- ifelse((clients$birthday>=800000 & clients$birthday<=900000) , '80_90',clients$age_range)
 clients$age_range <- ifelse((clients$birthday>=900000 & clients$birthday<=991231) , '90_99',clients$age_range)
 clients$age_range <- as.factor(clients$age_range)
+clients$age <- clients$birthday
+clients$age <- (990000 - clients$birthday)/10000
+
 
 all_values <- function(amount, type,METHOD){
   res <- c()
@@ -70,7 +73,7 @@ filtered_values <- function(amount, type, credit, METHOD){
 count_cmp <- function(coll, value){
   length(which(coll==value))
 }
-
+read.csv
 trans_calculations <- trans %>% 
   group_by(account_id) %>% 
   summarize(
@@ -88,15 +91,26 @@ trans_calculations <- trans %>%
     min_balance=min(balance)
   )
 
+
+trans_by_month <- trans %>% mutate(date_by_month=floor(date/100))
+trans_by_month_sum <- trans_by_month %>% group_by(date_by_month, account_id) %>% summarize(sum_balance = mean(balance))
+
+trans_by_month_final <- trans_by_month_sum %>% group_by(account_id) %>% summarize(avg_monthly_balance=mean(sum_balance))
+
+
 disp_owners <- filter(disp,type=="OWNER")
 clients_accounts <- subset(left_join(disp_owners, clients, by='client_id'), select=-district_id)
 #account_district <- subset(left_join(account, district, by=c('district_id'='code')), select=c(account_id, district_id, name, region))
 account_district <- left_join(account, district, by=c('district_id'='code'))
 account_district_client <- left_join(clients_accounts, account_district, 'account_id')
 trans_client_district <- left_join(trans_calculations, account_district_client, 'account_id')
+trans_client_district <- left_join(trans_client_district, trans_by_month_final, 'account_id')
 
 
 trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
+trans_client_district_loan$datediff <- trans_client_district_loan$date.x
+trans_client_district_loan$datediff <- trans_client_district_loan$date.x - trans_client_district_loan$birthday
+
 
 print(trans_client_district_loan)
 
@@ -104,6 +118,7 @@ trans_ratio_calculations <- trans_client_district_loan %>%
   group_by(loan_id) %>% 
   summarize(
     credit_per_witdrawal = calculate_ratio(avg_credit, avg_withdrawal),
+    credit_per_payments = calculate_ratio(avg_credit, payments),
     crimes96_per_crime95 = calculate_ratio(crimes96, crimes95),
     loanAmount_per_avgAmount = calculate_ratio(amount, avg_amount)
   )
@@ -111,46 +126,59 @@ trans_ratio_calculations <- trans_client_district_loan %>%
 trans_client_final <- left_join(trans_client_district_loan, trans_ratio_calculations, 'loan_id')
 
 trans_client_final_card <- left_join(trans_client_final, card, 'disp_id')
-print(trans_client_final_card)
 
-group_by_region <- trans_client_district %>% 
-  group_by(region) %>% 
-  summarize(
-    avg_credit=mean(avg_credit),
-    avg_withdrawal=mean(avg_withdrawal),
-    avg_amount=mean(avg_amount),
-    avg_balance=mean(avg_balance)
-  )
+final_ratios <- trans_client_final_card
 
-group_by_gender <- trans_client_district %>% 
-  group_by(gender) %>% 
-  summarize(
-    avg_credit=mean(avg_credit),
-    avg_withdrawal=mean(avg_withdrawal),
-    avg_amount=mean(avg_amount),
-    avg_balance=mean(avg_balance)
-  )
+final_ratios$avg_amount_by_duration <- (final_ratios$avg_amount *  final_ratios$duration)
+final_ratios$cover_loan <- final_ratios$amount - final_ratios$avg_balance  - final_ratios$avg_amount_by_duration
+final_ratios$n_credits_vs_n_withdrawal <- final_ratios$n_credit - final_ratios$n_withdrawal
+final_ratios$avg_credits_vs_avg_withdrawal <- final_ratios$avg_credit - final_ratios$avg_withdrawal
+final_ratios$time_before_loan <- final_ratios$date.y - final_ratios$date.x
+final_ratios$payments_by_duration <- final_ratios$payments * final_ratios$duration
+final_ratios$avg_monthly_balance_vs_payments <- final_ratios$avg_monthly_balance - final_ratios$payments_by_duration + final_ratios$avg_amount_by_duration
+final_ratios$status <- ifelse(final_ratios$status == 1, 1, 0)
 
-group_by_name <- trans_client_district %>% 
-  group_by(name) %>% 
-  summarize(
-    avg_credit=mean(avg_credit),
-    avg_withdrawal=mean(avg_withdrawal),
-    avg_amount=mean(avg_amount),
-    avg_balance=mean(avg_balance)
-  )
 
-group_by_age_range <- trans_client_district %>% 
-  group_by(age_range) %>% 
-  summarize(
-    avg_credit=mean(avg_credit),
-    avg_withdrawal=mean(avg_withdrawal),
-    avg_amount=mean(avg_amount),
-    avg_balance=mean(avg_balance)
-  )
+#date.x Loan Data Date.y account_date
 
 
 
+
+# group_by_region <- trans_client_district %>% 
+#   group_by(region) %>% 
+#   summarize(
+#     avg_credit=mean(avg_credit),
+#     avg_withdrawal=mean(avg_withdrawal),
+#     avg_amount=mean(avg_amount),
+#     avg_balance=mean(avg_balance)
+#   )
+# 
+# group_by_gender <- trans_client_district %>% 
+#   group_by(gender) %>% 
+#   summarize(
+#     avg_credit=mean(avg_credit),
+#     avg_withdrawal=mean(avg_withdrawal),
+#     avg_amount=mean(avg_amount),
+#     avg_balance=mean(avg_balance)
+#   )
+# 
+# group_by_name <- trans_client_district %>% 
+#   group_by(name) %>% 
+#   summarize(
+#     avg_credit=mean(avg_credit),
+#     avg_withdrawal=mean(avg_withdrawal),
+#     avg_amount=mean(avg_amount),
+#     avg_balance=mean(avg_balance)
+#   )
+# 
+# group_by_age_range <- trans_client_district %>% 
+#   group_by(age_range) %>% 
+#   summarize(
+#     avg_credit=mean(avg_credit),
+#     avg_withdrawal=mean(avg_withdrawal),
+#     avg_amount=mean(avg_amount),
+#     avg_balance=mean(avg_balance)
+#   )
 #Approved Loans
 #ggplot(trans_client_district_loan[trans_client_district_loan$status>0,], mapping=aes(x=age_range)) + geom_histogram(binwidth = 300, stat="count")
 # + theme_bw() + coord_cartesian() + scale_color_gradient()
@@ -171,5 +199,4 @@ group_by_age_range <- trans_client_district %>%
 #[29] "hab"                   "m_hab.499"             "m_hab500.1999"         "m_hab2000.9999"       
 #[33] "m_hab.10000"           "cities"                "urban_hab"             "salary"               
 #[37] "unemployment95"        "unemployment96"        "enterpreneurs_per_hab" "crimes95"             
-#[41] "crimes96" 
-
+#[41] "crimes96"
