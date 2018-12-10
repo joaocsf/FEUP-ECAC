@@ -136,7 +136,6 @@ final_ratios$avg_credits_vs_avg_withdrawal <- final_ratios$avg_credit - final_ra
 final_ratios$time_before_loan <- final_ratios$date.y - final_ratios$date.x
 final_ratios$payments_by_duration <- final_ratios$payments * final_ratios$duration
 final_ratios$avg_monthly_balance_vs_payments <- final_ratios$avg_monthly_balance - final_ratios$payments_by_duration + final_ratios$avg_amount_by_duration
-final_ratios$status <- ifelse(final_ratios$status == 1, 1, 0)
 
 
 #date.x Loan Data Date.y account_date
