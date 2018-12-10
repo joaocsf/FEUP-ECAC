@@ -136,6 +136,14 @@ final_ratios$avg_credits_vs_avg_withdrawal <- final_ratios$avg_credit - final_ra
 final_ratios$time_before_loan <- final_ratios$date.y - final_ratios$date.x
 final_ratios$payments_by_duration <- final_ratios$payments * final_ratios$duration
 final_ratios$avg_monthly_balance_vs_payments <- final_ratios$avg_monthly_balance - final_ratios$payments_by_duration + final_ratios$avg_amount_by_duration
+final_ratios$frequency_numeric <- unclass(final_ratios$frequency)
+final_ratios$region_numeric <- unclass(final_ratios$region)
+final_ratios$gender_numeric <- unclass(final_ratios$gender)
+final_ratios$card_numeric <- unclass(final_ratios$type.y)
+final_ratios$card_numeric <- ifelse(is.na(final_ratios$card_numeric), 0, final_ratios$card_numeric)
+final_ratios$issued <- ifelse(is.na(final_ratios$issued), 0, final_ratios$issued)
+
+
 
 
 #date.x Loan Data Date.y account_date
