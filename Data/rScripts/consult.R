@@ -81,11 +81,14 @@ group_by(account_id) %>%
     n_withdrawal = count_cmp(type, "withdrawal") + count_cmp(type, "withdrawal cash"),
     max_credit=filtered_values(amount,type, TRUE, max),
     avg_credit=filtered_values(amount,type, TRUE, mean),
+    sd_credit=filtered_values(amount,type, TRUE, sd),
     min_credit=filtered_values(amount,type, TRUE, min),
     max_withdrawal=filtered_values(amount,type, FALSE, max),
     avg_withdrawal=filtered_values(amount,type, FALSE, mean),
+    sd_withdrawal=filtered_values(amount,type, FALSE, sd),
     min_withdrawal=filtered_values(amount,type, FALSE, min),
     avg_amount=all_values(amount, type, mean),
+    sd_amount=all_values(amount, type, sd),
     avg_balance=mean(balance),
     max_balance=max(balance),
     min_balance=min(balance)
@@ -142,6 +145,7 @@ final_ratios$gender_numeric <- unclass(final_ratios$gender)
 final_ratios$card_numeric <- unclass(final_ratios$type.y)
 final_ratios$card_numeric <- ifelse(is.na(final_ratios$card_numeric), 0, final_ratios$card_numeric)
 final_ratios$issued <- ifelse(is.na(final_ratios$issued), 0, final_ratios$issued)
+final_ratios$sd_withdrawal <- ifelse(is.na(final_ratios$sd_withdrawal), 0, final_ratios$sd_withdrawal)
 
 
 
