@@ -1,4 +1,5 @@
 library(tidyverse)
+library(psych)
 clients <- read.csv('./csv_db/clients.csv',sep = ';', header=TRUE)
 trans <- read.csv('./csv_db/trans_train.csv',sep = ',', header=TRUE)
 account <- read.csv('./csv_db/account.csv',sep = ';', header=TRUE)
@@ -50,7 +51,6 @@ calculate_ratio <- function(coll1, coll2){
 
 filtered_values <- function(amount, type, credit, METHOD){
   res <- c()
-  
   for (i in 1:length(amount)){
     is_credit <- type[i] == 'credit'
     value <- amount[i]
@@ -73,32 +73,61 @@ filtered_values <- function(amount, type, credit, METHOD){
 count_cmp <- function(coll, value){
   length(which(coll==value))
 }
-read.csv
+
+print('Calculating Statistics')
+
 trans_calculations <- trans %>% 
 group_by(account_id) %>% 
   summarize(
     n_credit = count_cmp(type, "credit"),
     n_withdrawal = count_cmp(type, "withdrawal") + count_cmp(type, "withdrawal cash"),
+    
     max_credit=filtered_values(amount,type, TRUE, max),
     avg_credit=filtered_values(amount,type, TRUE, mean),
-    sd_credit=filtered_values(amount,type, TRUE, sd),
     min_credit=filtered_values(amount,type, TRUE, min),
+    sd_credit=filtered_values(amount,type, TRUE, sd),
+    skew_credit=filtered_values(amount,type, TRUE, skew),
+    kurtosi_credit=filtered_values(amount,type, TRUE, kurtosi),
+    median_credit=filtered_values(amount,type, TRUE, median),
+    mad_credit=filtered_values(amount,type, TRUE, mad),
+    
+    
     max_withdrawal=filtered_values(amount,type, FALSE, max),
     avg_withdrawal=filtered_values(amount,type, FALSE, mean),
-    sd_withdrawal=filtered_values(amount,type, FALSE, sd),
     min_withdrawal=filtered_values(amount,type, FALSE, min),
+    sd_withdrawal=filtered_values(amount,type, FALSE, sd),
+    skew_withdrawal=filtered_values(amount,type, FALSE, skew),
+    kurtosi_withdrawal=filtered_values(amount,type, FALSE, kurtosi),
+    median_withdrawal=filtered_values(amount,type, FALSE, median),
+    mad_withdrawal=filtered_values(amount,type, FALSE, mad),
+    
     avg_amount=all_values(amount, type, mean),
     sd_amount=all_values(amount, type, sd),
+    skew_amount=all_values(amount, type, skew),
+    kurtosi_amount=all_values(amount, type, kurtosi),
+    median_amount=all_values(amount, type, median),
+    mad_amount=all_values(amount, type, mad),
+    
     avg_balance=mean(balance),
     max_balance=max(balance),
-    min_balance=min(balance)
+    min_balance=min(balance),
+    sd_balance=sd(balance),
+    skew_balance=skew(balance),
+    kurtosi_balance=kurtosi(balance),
+    median_balance=median(balance),
+    mad_balance=mad(balance)
+    
+    
     )
 
+print('Summarizing by month')
 
 trans_by_month <- trans %>% mutate(date_by_month=floor(date/100))
 trans_by_month_sum <- trans_by_month %>% group_by(date_by_month, account_id) %>% summarize(sum_balance = mean(balance))
 
 trans_by_month_final <- trans_by_month_sum %>% group_by(account_id) %>% summarize(avg_monthly_balance=mean(sum_balance))
+
+print('Joining Tables')
 
 
 disp_owners <- filter(disp,type=="OWNER")
@@ -113,9 +142,6 @@ trans_client_district <- left_join(trans_client_district, trans_by_month_final, 
 trans_client_district_loan <- left_join(loan, trans_client_district, 'account_id')
 trans_client_district_loan$datediff <- trans_client_district_loan$date.x
 trans_client_district_loan$datediff <- trans_client_district_loan$date.x - trans_client_district_loan$birthday
-
-
-print(trans_client_district_loan)
 
 trans_ratio_calculations <- trans_client_district_loan %>% 
   group_by(loan_id) %>% 
@@ -132,6 +158,9 @@ trans_client_final_card <- left_join(trans_client_final, card, 'disp_id')
 
 final_ratios <- trans_client_final_card
 
+print('Deriving Extra attributes')
+
+
 final_ratios$avg_amount_by_duration <- (final_ratios$avg_amount *  final_ratios$duration)
 final_ratios$cover_loan <- final_ratios$amount - final_ratios$avg_balance  - final_ratios$avg_amount_by_duration
 final_ratios$n_credits_vs_n_withdrawal <- final_ratios$n_credit - final_ratios$n_withdrawal
@@ -147,6 +176,8 @@ final_ratios$card_numeric <- ifelse(is.na(final_ratios$card_numeric), 0, final_r
 final_ratios$issued <- ifelse(is.na(final_ratios$issued), 0, final_ratios$issued)
 final_ratios$sd_withdrawal <- ifelse(is.na(final_ratios$sd_withdrawal), 0, final_ratios$sd_withdrawal)
 
+
+print('Finished')
 
 
 
