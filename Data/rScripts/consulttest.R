@@ -175,6 +175,7 @@ final_ratios$card_numeric <- unclass(final_ratios$type.y)
 final_ratios$card_numeric <- ifelse(is.na(final_ratios$card_numeric), 0, final_ratios$card_numeric)
 final_ratios$issued <- ifelse(is.na(final_ratios$issued), 0, final_ratios$issued)
 final_ratios$sd_withdrawal <- ifelse(is.na(final_ratios$sd_withdrawal), 0, final_ratios$sd_withdrawal)
+final_ratios$max_balance_vs_min_balance <- final_ratios$min_balance - final_ratios$max_balance 
 
 
 print('Finished')
