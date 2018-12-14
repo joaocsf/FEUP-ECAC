@@ -69,6 +69,11 @@ filtered_values <- function(amount, type, credit, METHOD){
   }
 }
 
+growth <- function(data){
+  tmp <- tail(data, 1)/head(data, 1) -1
+  tmp[is.na(tmp)] <- 0
+  tmp
+}
 
 count_cmp <- function(coll, value){
   length(which(coll==value))
@@ -90,6 +95,7 @@ trans_calculations <- trans %>%
     kurtosi_credit=filtered_values(amount,type, TRUE, kurtosi),
     median_credit=filtered_values(amount,type, TRUE, median),
     mad_credit=filtered_values(amount,type, TRUE, mad),
+    growth_credit=filtered_values(amount,type, TRUE, growth),
     
     
     max_withdrawal=filtered_values(amount,type, FALSE, max),
@@ -100,6 +106,8 @@ trans_calculations <- trans %>%
     kurtosi_withdrawal=filtered_values(amount,type, FALSE, kurtosi),
     median_withdrawal=filtered_values(amount,type, FALSE, median),
     mad_withdrawal=filtered_values(amount,type, FALSE, mad),
+    grwoth_withdrawal=filtered_values(amount,type, FALSE, growth),
+    
     
     avg_amount=all_values(amount, type, mean),
     sd_amount=all_values(amount, type, sd),
@@ -107,6 +115,9 @@ trans_calculations <- trans %>%
     kurtosi_amount=all_values(amount, type, kurtosi),
     median_amount=all_values(amount, type, median),
     mad_amount=all_values(amount, type, mad),
+    growth_amount=all_values(amount, type, growth),
+    
+    
     
     avg_balance=mean(balance),
     max_balance=max(balance),
@@ -115,7 +126,8 @@ trans_calculations <- trans %>%
     skew_balance=skew(balance),
     kurtosi_balance=kurtosi(balance),
     median_balance=median(balance),
-    mad_balance=mad(balance)
+    mad_balance=mad(balance),
+    growth_balance=growth(balance)
     
     
   )
@@ -176,6 +188,10 @@ final_ratios$card_numeric <- ifelse(is.na(final_ratios$card_numeric), 0, final_r
 final_ratios$issued <- ifelse(is.na(final_ratios$issued), 0, final_ratios$issued)
 final_ratios$sd_withdrawal <- ifelse(is.na(final_ratios$sd_withdrawal), 0, final_ratios$sd_withdrawal)
 final_ratios$max_balance_vs_min_balance <- final_ratios$min_balance - final_ratios$max_balance 
+final_ratios$skew_withdrawal <- ifelse(is.na(final_ratios$skew_withdrawal), 0, final_ratios$skew_withdrawal)
+final_ratios$kurtosi_withdrawal <- ifelse(is.na(final_ratios$kurtosi_withdrawal), 0, final_ratios$kurtosi_withdrawal)
+final_ratios$mad_withdrawal <- ifelse(is.na(final_ratios$mad_withdrawal), 0, final_ratios$mad_withdrawal)
+
 
 
 print('Finished')
