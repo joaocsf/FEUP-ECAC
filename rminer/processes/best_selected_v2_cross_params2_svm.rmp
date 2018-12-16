@@ -15,10 +15,10 @@
       <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve loans_train_v2" width="90" x="45" y="34">
         <parameter key="repository_entry" value="../data/queries/loans_train_v2"/>
       </operator>
-      <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve loans_test_v2" width="90" x="313" y="340">
+      <operator activated="true" class="retrieve" compatibility="9.0.003" expanded="true" height="68" name="Retrieve loans_test_v2" width="90" x="45" y="187">
         <parameter key="repository_entry" value="../data/queries/loans_test_v2"/>
       </operator>
-      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes (3)" width="90" x="45" y="136">
+      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes (3)" width="90" x="179" y="34">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
         <parameter key="attributes" value="loan_id|account_id|age_range|att1|card_id|client_id|disp_id|district_id|frequency|name|region|type.x|type.y|gender"/>
@@ -32,7 +32,7 @@
         <parameter key="invert_selection" value="true"/>
         <parameter key="include_special_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes" width="90" x="45" y="289">
+      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes" width="90" x="313" y="34">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
         <parameter key="attributes" value="growth_balance|kurtosi_balance|min_balance|skew_credit|urban_hab|unemployment96|unemployment95|type.y|type.x|time_before_loan|status|skew_withdrawal|skew_balance|skew_amount|sd_withdrawal|sd_credit|sd_balance|sd_amount|salary|region_numeric|region|payments_by_duration|payments|name|n_withdrawal|n_credits_vs_n_withdrawal|n_credit|min_withdrawal|min_credit|median_withdrawal|median_credit|median_balance|median_amount|max_withdrawal|max_credit|max_balance_vs_min_balance|max_balance|mad_withdrawal|mad_credit|mad_balance|mad_amount|m_hab500.1999|m_hab2000.9999|m_hab.499|m_hab.10000|loan_id|loanAmount_per_avgAmount|kurtosi_withdrawal|kurtosi_credit|kurtosi_amount|issued|hab|grwoth_withdrawal|growth_credit|growth_amount|gender_numeric|gender|frequency_numeric|frequency|enterpreneurs_per_hab|duration|district_id|disp_id|datediff|date.y|date.x|crimes96_per_crime95|crimes96|crimes95|credit_per_witdrawal|credit_per_payments|cover_loan|client_id|cities|card_numeric|card_id|birthday|avg_withdrawal|avg_monthly_balance_vs_payments|avg_monthly_balance|avg_credits_vs_avg_withdrawal|avg_credit|avg_balance|avg_amount_by_duration|avg_amount|att1|amount|age_range|age|account_id"/>
@@ -46,15 +46,7 @@
         <parameter key="invert_selection" value="false"/>
         <parameter key="include_special_attributes" value="false"/>
       </operator>
-      <operator activated="false" class="remove_correlated_attributes" compatibility="9.0.003" expanded="true" height="82" name="Remove Correlated Attributes" width="90" x="179" y="187">
-        <parameter key="correlation" value="0.75"/>
-        <parameter key="filter_relation" value="greater"/>
-        <parameter key="attribute_order" value="original"/>
-        <parameter key="use_absolute_correlation" value="true"/>
-        <parameter key="use_local_random_seed" value="false"/>
-        <parameter key="local_random_seed" value="1992"/>
-      </operator>
-      <operator activated="true" class="concurrency:cross_validation" compatibility="9.0.003" expanded="true" height="145" name="Cross Validation" width="90" x="313" y="34">
+      <operator activated="true" class="concurrency:cross_validation" compatibility="9.0.003" expanded="true" height="145" name="Cross Validation" width="90" x="447" y="34">
         <parameter key="split_on_batch_attribute" value="false"/>
         <parameter key="leave_one_out" value="false"/>
         <parameter key="number_of_folds" value="70"/>
@@ -63,7 +55,7 @@
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="normalize" compatibility="9.0.003" expanded="true" height="103" name="Normalize" width="90" x="112" y="34">
+          <operator activated="true" class="normalize" compatibility="9.0.003" expanded="true" height="103" name="Normalize" width="90" x="45" y="34">
             <parameter key="return_preprocessing_model" value="false"/>
             <parameter key="create_view" value="false"/>
             <parameter key="attribute_filter_type" value="all"/>
@@ -83,7 +75,7 @@
             <parameter key="max" value="1.0"/>
             <parameter key="allow_negative_values" value="false"/>
           </operator>
-          <operator activated="true" class="logistic_regression" compatibility="9.0.003" expanded="true" height="103" name="Logistic Regression (2)" width="90" x="246" y="34">
+          <operator activated="true" class="logistic_regression" compatibility="9.0.003" expanded="true" height="103" name="Logistic Regression (2)" width="90" x="179" y="34">
             <parameter key="kernel_type" value="dot"/>
             <parameter key="kernel_gamma" value="1.0"/>
             <parameter key="kernel_sigma1" value="1.0"/>
@@ -101,7 +93,7 @@
             <parameter key="calculate_weights" value="true"/>
             <parameter key="return_optimization_performance" value="true"/>
           </operator>
-          <operator activated="true" class="group_models" compatibility="9.0.003" expanded="true" height="103" name="Group Models" width="90" x="447" y="34"/>
+          <operator activated="true" class="group_models" compatibility="9.0.003" expanded="true" height="103" name="Group Models" width="90" x="313" y="34"/>
           <connect from_port="training set" to_op="Normalize" to_port="example set input"/>
           <connect from_op="Normalize" from_port="example set output" to_op="Logistic Regression (2)" to_port="training set"/>
           <connect from_op="Normalize" from_port="preprocessing model" to_op="Group Models" to_port="models in 1"/>
@@ -112,11 +104,11 @@
           <portSpacing port="sink_through 1" spacing="0"/>
         </process>
         <process expanded="true">
-          <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model (4)" width="90" x="45" y="136">
+          <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model (4)" width="90" x="45" y="34">
             <list key="application_parameters"/>
             <parameter key="create_view" value="false"/>
           </operator>
-          <operator activated="true" class="performance_binominal_classification" compatibility="9.0.003" expanded="true" height="82" name="Performance (2)" width="90" x="179" y="136">
+          <operator activated="true" class="performance_binominal_classification" compatibility="9.0.003" expanded="true" height="82" name="Performance (2)" width="90" x="179" y="34">
             <parameter key="main_criterion" value="AUC"/>
             <parameter key="accuracy" value="true"/>
             <parameter key="classification_error" value="false"/>
@@ -154,12 +146,12 @@
           <portSpacing port="sink_performance 2" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.0.003" expanded="true" height="103" name="Multiply" width="90" x="514" y="34"/>
-      <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model (2)" width="90" x="514" y="238">
+      <operator activated="true" class="multiply" compatibility="9.0.003" expanded="true" height="103" name="Multiply" width="90" x="581" y="34"/>
+      <operator activated="true" class="apply_model" compatibility="9.0.003" expanded="true" height="82" name="Apply Model (2)" width="90" x="179" y="187">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes (2)" width="90" x="648" y="289">
+      <operator activated="true" class="select_attributes" compatibility="9.0.003" expanded="true" height="82" name="Select Attributes (2)" width="90" x="313" y="187">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
         <parameter key="attributes" value="loan_id|prediction(status)"/>
@@ -173,14 +165,14 @@
         <parameter key="invert_selection" value="false"/>
         <parameter key="include_special_attributes" value="true"/>
       </operator>
-      <operator activated="true" class="rename" compatibility="9.0.003" expanded="true" height="82" name="Rename (2)" width="90" x="782" y="187">
+      <operator activated="true" class="rename" compatibility="9.0.003" expanded="true" height="82" name="Rename (2)" width="90" x="447" y="187">
         <parameter key="old_name" value="loan_id"/>
         <parameter key="new_name" value="Id"/>
         <list key="rename_additional_attributes">
           <parameter key="prediction(status)" value="Predicted"/>
         </list>
       </operator>
-      <operator activated="true" class="write_csv" compatibility="9.0.003" expanded="true" height="82" name="Write CSV" width="90" x="782" y="340">
+      <operator activated="true" class="write_csv" compatibility="9.0.003" expanded="true" height="82" name="Write CSV" width="90" x="581" y="187">
         <parameter key="csv_file" value="/home/joaocsf/git/FEUP-ECAC/results/_result_svm.csv"/>
         <parameter key="column_separator" value=","/>
         <parameter key="write_attribute_names" value="true"/>
